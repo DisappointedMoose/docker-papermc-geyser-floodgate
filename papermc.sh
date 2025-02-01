@@ -11,7 +11,7 @@ mv ./server.properties /papermc/server.properties
 cd papermc
 
 # Get version information and build download URL and jar name
-URL=https://papermc.io/api/v2/projects/paper
+URL='https://api.papermc.io/v2/projects/paper'
 if [ ${MC_VERSION} = latest ]
 then
   # Get the latest MC version
@@ -61,5 +61,3 @@ mv ./floodgate-spigot.jar ./plugins
 
 # Start server
 exec java -server ${JAVA_OPTS} -jar ${JAR_NAME} nogui
-
-#kubectl exec --stdin --tty mcs-0 -- bin/bash get a bash to the pod
