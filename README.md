@@ -1,8 +1,8 @@
 ## Forked From:
-- (https://github.com/smcbride-ca/papermc-geyser-docker).
+- (https://github.com/davidsauro/docker-papermc-geyser-floodgate).
 
 ## Why Fork?
-Originally the above image was a great starting point but the shell script was a bit out of date and the jar files specified to be downloaded were returning 404s. This was also not setup to run in a kubernetes cluster which I am trying (my brain hurts) to get working. There is a work in progress kubernetes.yaml file in this repo that you SHOULD be able to deploy to a cluster, but I make no promises of it working at this time. I am still trying to figure some of this out. See the Kubernetes section for more info
+The install script in the above image was using outdated API URLs. Also I wanted to switch to a more lightweight docker image based on alpine.
 
 # PaperMC-Geyser-Floodgate
 This is a Linux Docker image for the PaperMC Minecraft server, GeyserMC, and Floodgate.
@@ -19,14 +19,14 @@ sudo sh ./get-docker.sh --dry-run
 ```
 
 # Pull / Build
-This image is available here: `docker pull etharis/minecraft:latest`
+This image is available here: `docker pull disappointedmoose/papermc-geyser-floodgate:latest`
 
 If you want to build it yourself. This is a very simple process.
 
 ```shell
-git clone https://github.com/davidsauro/docker-papermc-geyser-floodgate.git
+git clone https://github.com/DisappointedMoose/docker-papermc-geyser-floodgate.git
 cd papermc-geyser-docker
-docker build . -t etharis/minecraft:latest
+docker build . -t disappointedmoose/papermc-geyser-floodgate:latest
 ```
 ## Command
 ### Important Note
@@ -34,7 +34,7 @@ docker build . -t etharis/minecraft:latest
 
 With this image, you can create a new PaperMC Minecraft server with one command (note that running said command indicates agreement to the Minecraft EULA). Here is an example:
 
-```docker run -p 25565:25565 -p 19132:19132/udp etharis/minecraft```
+```docker run -p 25565:25565 -p 19132:19132/udp disappointedmoose/papermc-geyser-floodgate```
 
 While this command will work just fine in many cases, it is only the bare minimum required to start a functional server and can be vastly improved by specifying some...
 ## Options
@@ -74,7 +74,7 @@ There are several command line options that users may want to specify when utili
 
 The command I would recommend using goes something like this:
 
-```docker run -p 25565:25565 -p 19132:19132/udp -v /home/minecraft/server:/papermc -d -ti --restart on-failure -e MC_RAM="4G" -e TZ="America/Toronto" --name "minecraft" --user 1001:1001 smcbride/papermc-geyser-floodgate```
+```docker run -p 25565:25565 -p 19132:19132/udp -v /home/minecraft/server:/papermc -d -ti --restart on-failure -e MC_RAM="4G" -e TZ="America/Toronto" --name "minecraft" --user 1001:1001 disappointedmoose/papermc-geyser-floodgate:latest```
 
 Replace the timezone, uid, and allocated ram with the correct values for your system.
 
@@ -110,23 +110,15 @@ Environment variables are options that are specified in the format `-e <NAME>="<
   - Set to any additional Java command line options that you would like to include.
   - By default, this environment variable is set to the empty string.
   - `-e JAVA_OPTS="<-XX:+UseConcMarkSweepGC -XX:+UseParNewGC>"`
+
 ## Further Setup
 From this point, the server should be configured in the same way as any other Minecraft server. The server's files, including `server.properties`, can be found in the volume that was specified earlier. The port that was specified earlier will probably need to be forwarded as well. For details on how to do this and other such configuration, Google it, because it works the same as any other Minecraft server.
 
-There is one change required in `server.properties` for Bedrock support to function. You must set `enforce-secure-profile=false`
-- Please note that this will allow users with chat signing disabled to join your world.
 # Technical
 This project *does **NOT** redistribute the Minecraft server files*. Instead, the (very small) script that is inside of the image, `papermc.sh`, downloads these files from their official sources during installation.
 
 ## Kubernetes
-With this config, (see kubernetes.yaml) I can't get the traffic to forward to the kuberneties cluser IP, so I need
-to do some port forwarding, but as far as I can tell kubectl doesn't support UDP forwarding for 
-some stupid reason so I had to install a plugin to accomplish it
-here is the command I used -  kubectl relay --address 0.0.0.0 pod/mcs-0 19132:19132
-
-The plugin I used is from [here](https://github.com/knight42/krelay) installed via [Krew](https://krew.sigs.k8s.io/)
-
-This probably has something to do with the fact that I am using MiniKube on an M1 Mac running Linux. I haven't tested this in a cloud provider yet, but I plan on doing that soon.
+Unlike the original project I don't have any kubernetes experience, so I removed kubernetes support since I'm unable to test and/or support it.
 
 **PLEASE NOTE:** 
 This is an unofficial project.
@@ -136,4 +128,4 @@ I did not create PaperMC. [This is the official PaperMC website.](https://paperm
 I did not create Geyser or Floodgate [This is the official GeyserMC website](https://geysermc.org/)
 
 ## Project Pages
-- [GitHub page](https://github.com/davidsauro/docker-papermc-geyser-floodgate.git).
+- [GitHub page](https://github.com/DisappointedMoose/docker-papermc-geyser-floodgate.git).
