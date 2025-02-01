@@ -1,5 +1,4 @@
-# JRE base
-FROM eclipse-temurin:21
+FROM alpine:latest
 
 # Environment variables
 ENV MC_VERSION="latest" \
@@ -9,10 +8,12 @@ ENV MC_VERSION="latest" \
 
 COPY papermc.sh .
 
-RUN apt-get update \
-    && apt-get install -y wget \
-    && apt-get install -y jq \
-    && rm -rf /var/lib/apt/lists/* \
+RUN apk update \
+    && apk add libstdc++ \
+    && apk add openjdk21-jre \
+    && apk add bash \
+    && apk add wget \
+    && apk add jq \
     && mkdir /papermc
 
 #get the config file into the root
@@ -20,7 +21,7 @@ COPY ./geyeserMCConfig.yml .
 COPY ./server.properties .
 
 # Start script
-CMD ["sh", "./papermc.sh"]
+CMD ["bash", "./papermc.sh"]
 
 # Container setup
 EXPOSE 25565/tcp
