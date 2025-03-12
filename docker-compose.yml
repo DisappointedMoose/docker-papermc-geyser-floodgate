@@ -1,0 +1,15 @@
+services:
+  papermc:
+    image: disappointedmoose/papermc-geyser-floodgate:latest
+    container_name: papermc
+    restart: unless-stopped
+    volumes:
+      - ./papermc:/papermc
+    ports:
+      - "25565:25565"     # Server Port
+      - "19132:19132/udp" # Bedrock Port
+    stdin_open: true
+    tty: true
+    environment:
+      - MC_RAM=4G
+      - MOTD=Default MOTD

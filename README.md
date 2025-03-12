@@ -81,44 +81,25 @@ Replace the timezone, uid, and allocated ram with the correct values for your sy
 There is one more command line option, but it is a bit special and deserves its own section.
 
 ### Environment Variables
-Environment variables are options that are specified in the format `-e <NAME>="<VALUE>"` where `<NAME>` is the name of the environment variable and `<VALUE>` is the value that the environment variable is being set to. Please note that setting an evironment variable with no value does not leave it at default; instead, this sets it to an empty string, which may cause issues. This image has four environment variables:
-- Minecraft Version
-  - **Name:** `MC_VERSION`
-  - **NOT SUPPORTED WITH GEYSER**
-    - This requires ViaVersion and in certain cases, ViaBackwards/ViaRewind
-  - Set this to the Minecraft version that the server should support.
-  - Note: there must be a PaperMC release for the specified version of Minecraft.
-  - If this is not set, the latest version supported by PaperMC will be used.
-  - Changing this on an existing server will change the version *without wiping the server*.
-  - `-e MC_VERSION="<latest>"`
+| Variable           | Default            | Description                                                                                                                                                                                                                                                                       | 
+|--------------------|--------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `MC_VERSION`       | `latest`           | The Minecraft version the server should use                                                                                                                                                                                                                                       |
+| `PAPER_BUILD`      | `latest`           | The PaperMC build the server should use. `latest` uses the latest stable build for the specified `MC_VERSION`<br/><br/>*PaperMC builds are tied to Minecraft versions. So if you specify a specific PaperMC build, it's a good idea to also specify a specific Minecraft Version* |
+| `MC_RAM`           | `4G`               | The amount of RAM the server can use.                                                                                                                                                                                                                                             |
+| `JAVA_OPTS`        | *empty*            | Additional Java command line options that should be included.<br/><br/>*-Xms and -Xmx are already included by default and can be modified by `MC_RAM` environment variable*                                                                                                       |
+| `GAMEMODE`         | `survival`         | Game mode of the server                                                                                                                                                                                                                                                           |
+| `MOTD`             | `Minecraft server` | Message of the Day displayed in the server browser of Minecraft                                                                                                                                                                                                                   |
+| `DIFFICULTY`       | `peaceful`         | Difficulty of the server                                                                                                                                                                                                                                                          |
+| `ENABLE_WHITELIST` | `false`            | If whitelist should be used                                                                                                                                                                                                                                                       |
 
-- PaperMC Build
-  - **Name:** `PAPER_BUILD`
-  - Set this to the number of the PaperMC build that the server should use (**not the Minecraft version**).
-  - If this is not set, the latest PaperMC build for the specified `MC_VERSION` will be used.
-  - Changing this on an existing server will change the version *without wiping the server*.
-  - `-e PAPER_BUILD="<latest>"`
-- RAM
-  - **Name:** `MC_RAM`
-  - Set this to the amount of RAM the server can use.
-  - Must be formatted as a number followed by `M` for "Megabytes" or `G` for "Gigabytes".
-  - If this is not set, Java allocates its own RAM based on total system/container RAM.
-  - `-e MC_RAM="<4G>"`
-- Java options
-  - **Name:** `JAVA_OPTS`
-  - **ADVANCED USERS ONLY**
-  - Set to any additional Java command line options that you would like to include.
-  - By default, this environment variable is set to the empty string.
-  - `-e JAVA_OPTS="<-XX:+UseConcMarkSweepGC -XX:+UseParNewGC>"`
 
 ## Further Setup
 From this point, the server should be configured in the same way as any other Minecraft server. The server's files, including `server.properties`, can be found in the volume that was specified earlier. The port that was specified earlier will probably need to be forwarded as well. For details on how to do this and other such configuration, Google it, because it works the same as any other Minecraft server.
 
+*Note: Some entries `server.properties` can be configured via environment variables. These WILL be overwritten on EVERY start of the container*
+
 # Technical
 This project *does **NOT** redistribute the Minecraft server files*. Instead, the (very small) script that is inside of the image, `papermc.sh`, downloads these files from their official sources during installation.
-
-## Kubernetes
-Unlike the original project I don't have any kubernetes experience, so I removed kubernetes support since I'm unable to test and/or support it.
 
 **PLEASE NOTE:** 
 This is an unofficial project.
