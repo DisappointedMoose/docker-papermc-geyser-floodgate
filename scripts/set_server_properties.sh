@@ -34,8 +34,10 @@ update_geyser_setting() {
         return 1
     fi
 
-    sed -i "s/^$KEY:.*/$KEY: \"$VALUE\"/" "$FILE"
+    sed -i "s/$KEY:.*/$KEY: \"$VALUE\"/" "$FILE"
 }
+
+update_geyser_setting "server-name" "${SERVER_NAME}"
 
 update_server_setting "motd" "${MOTD}"
 update_server_setting "gamemode" "${GAMEMODE}"
