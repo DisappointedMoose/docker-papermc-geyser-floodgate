@@ -6,19 +6,11 @@ ENV MC_VERSION="latest" \
     MC_RAM="4g" \
     JAVA_OPTS=""
 
+RUN apk update && apk add libstdc++ openjdk21-jre bash wget jq yq
+RUN mkdir -p /papermc/plugins
+
 COPY ./scripts/*.sh ./
-
-RUN apk update \
-    && apk add libstdc++ \
-    && apk add openjdk21-jre \
-    && apk add bash \
-    && apk add wget \
-    && apk add jq \
-    && mkdir /papermc
-
-#get the config file into the root
-COPY ./config/geyeserMCConfig.yml /papermc/plugins/Geyser-Spigot/config.yml
-COPY ./config/server.properties /papermc/server.properties
+COPY ./config/plugins.yml /default-config/plugins.yml
 
 # Start script
 CMD ["bash", "./run.sh"]

@@ -1,0 +1,36 @@
+plugins:
+  - name: "Geyser"
+    url: "https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot"
+    version: "latest"
+
+  - name: "Floodgate"
+    url: "https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot"
+    version: "latest"
+
+  - name: "EssentialsX"
+    url: "https://github.com/EssentialsX/Essentials/releases/download/2.21.0/EssentialsX-2.21.0.jar"
+    version: "2.21.0"
+
+  - name: "LuckPerms"
+    url: "https://download.luckperms.net/1575/bukkit/loader/LuckPerms-Bukkit-5.4.158.jar"
+    version: "5.4.158"
+
+  - name: "Chunky"
+    url: "https://hangarcdn.papermc.io/plugins/pop4959/Chunky/versions/1.4.28/PAPER/Chunky-Bukkit-1.4.28.jar"
+    version: "1.4.28"
+
+  - name: "CoreProtect"
+    url: "https://www.patreon.com/file?h=104200466&i=18902237"
+    version: "22.4"
+
+  - name: "Stargate"
+    url: "https://github.com/stargate-rewritten/Stargate-Bukkit/releases/download/0.11.5.10/Stargate-0.11.5.10.jar"
+    version: "0.11.5.10"
+
+  - name: "ViaVersion"
+    url: "https://github.com/ViaVersion/ViaVersion/releases/download/5.3.1/ViaVersion-5.3.1.jar"
+    version: "5.3.1"
+
+  - name: "ViaBackwards"
+    url: "https://github.com/ViaVersion/ViaBackwards/releases/download/5.3.1/ViaBackwards-5.3.1.jar"
+    version: "5.3.1"

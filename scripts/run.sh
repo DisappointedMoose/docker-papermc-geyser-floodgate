@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ ! -f /papermc/plugins.yml ]; then
+    echo "Copying default plugins.yml to /papermc/"
+    cp /default-config/plugins.yml /papermc/plugins.yml
+fi
+
 # Enter server directory
 cd papermc || exit
 
